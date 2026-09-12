@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BLELITE — A premium, privacy-first investment companion for independent global stock investors. Track, analyze, and journal your trades across US, HK, JP and European markets.">
+<meta name="keywords" content="BLELITE, stock tracker, investment, portfolio, screener, calculator, photo journal, finance">
+<title>BLELITE — Your Private Investment Companion</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #141414;
+        --bg-card: #1a1a1a;
+        --gold: #d4af37;
+        --gold-light: #f0d678;
+        --gold-dark: #b8941f;
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0a0;
+        --border: #2a2a2a;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        z-index: 100;
+        padding: 16px 0;
+    }
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .nav-links {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+    }
+    .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 120px 24px 80px;
+        background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08), transparent 60%);
+    }
+    .hero-content { max-width: 900px; }
+    .badge {
+        display: inline-block;
+        padding: 6px 16px;
+        border: 1px solid var(--gold-dark);
+        border-radius: 100px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        color: var(--gold);
+        margin-bottom: 24px;
+        text-transform: uppercase;
+    }
+    .hero h1 {
+        font-size: clamp(40px, 7vw, 72px);
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 24px;
+        letter-spacing: -1px;
+    }
+    .hero h1 .gold {
+        background: linear-gradient(135deg, var(--gold-light), var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .hero p {
+        font-size: 18px;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto 40px;
+    }
+    .cta-group {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .btn {
+        padding: 14px 32px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.25s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: #0a0a0a;
+        box-shadow: 0 4px 24px rgba(212, 175, 55, 0.3);
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4);
+    }
+    .btn-secondary {
+        background: transparent;
+        color: var(--text-primary);
+        border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+    section {
+        padding: 100px 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-header {
+        text-align: center;
+        margin-bottom: 64px;
+    }
+    .section-tag {
+        color: var(--gold);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+    .section-header h2 {
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 700;
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
+    }
+    .section-header p {
+        color: var(--text-secondary);
+        font-size: 17px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+    }
+    .feature-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 32px;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    .feature-card:hover {
+        border-color: var(--gold-dark);
+        transform: translateY(-4px);
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .feature-card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .feature-card p {
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    .highlights {
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 100px 24px;
+    }
+    .highlights-inner { max-width: 1200px; margin: 0 auto; }
+    .highlight-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 32px;
+        margin-top: 48px;
+    }
+    .highlight-item {
+        text-align: center;
+    }
+    .highlight-num {
+        font-size: 42px;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--gold-light), var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 8px;
+    }
+    .highlight-label {
+        color: var(--text-secondary);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 500;
+    }
+    .calc-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: center;
+    }
+    .calc-text h3 {
+        font-size: 32px;
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+    .calc-text p {
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+        font-size: 16px;
+    }
+    .calc-list {
+        list-style: none;
+    }
+    .calc-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-secondary);
+    }
+    .calc-list li::before {
+        content: '◆';
+        color: var(--gold);
+        font-size: 10px;
+    }
+    .calc-visual {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px;
+        font-family: 'SF Mono', Menlo, monospace;
+    }
+    .calc-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 13px;
+    }
+    .calc-row span:first-child { color: var(--text-secondary); }
+    .calc-row span:last-child { color: var(--gold); font-weight: 600; }
+    footer {
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border);
+        padding: 60px 24px 30px;
+    }
+    .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 48px;
+        margin-bottom: 40px;
+    }
+    .footer-brand .logo { margin-bottom: 16px; display: inline-block; }
+    .footer-brand p {
+        color: var(--text-secondary);
+        font-size: 14px;
+        max-width: 320px;
+    }
+    footer h4 {
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+    }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 10px; }
+    footer ul a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+    }
+    footer ul a:hover { color: var(--gold); }
+    .footer-bottom {
+        border-top: 1px solid var(--border);
+        padding-top: 24px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+    }
+    @media (max-width: 768px) {
+        .nav-links { display: none; }
+        .calc-section { grid-template-columns: 1fr; }
+        .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-container">
+        <div class="logo">BLELITE</div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#calculators">Calculators</a></li>
+            <li><a href="#journal">Journal</a></li>
+            <li><a href="support.html">Support</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="badge">iOS 16+ · iPhone</span>
+        <h1>Your Private<br><span class="gold">Investment Terminal</span></h1>
+        <p>A premium, privacy-first investment companion for independent global stock investors. Professional-grade tooling without sacrificing focus or simplicity.</p>
+        <div class="cta-group">
+            <a href="#features" class="btn btn-primary">Explore Features ↓</a>
+            <a href="support.html" class="btn btn-secondary">Contact Support</a>
+        </div>
+    </div>
+</section>
+
+<div class="highlights">
+    <div class="highlights-inner">
+        <div class="section-header">
+            <div class="section-tag">Why BLELITE</div>
+            <h2>Built for serious investors</h2>
+            <p>Designed to look like a private terminal and feel like home.</p>
+        </div>
+        <div class="highlight-list">
+            <div class="highlight-item">
+                <div class="highlight-num">4</div>
+                <div class="highlight-label">Markets Covered</div>
+            </div>
+            <div class="highlight-item">
+                <div class="highlight-num">8</div>
+                <div class="highlight-label">Pro Calculators</div>
+            </div>
+            <div class="highlight-item">
+                <div class="highlight-num">10</div>
+                <div class="highlight-label">Currencies</div>
+            </div>
+            <div class="highlight-item">
+                <div class="highlight-num">0</div>
+                <div class="highlight-label">Trackers · Ads</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="features">
+    <div class="section-header">
+        <div class="section-tag">Core Toolkit</div>
+        <h2>Everything you need between open and close</h2>
+        <p>From real-time style price simulation to sector rotation heatmaps and curated market briefs.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>Live-Style Market Data</h3>
+            <p>Track every move across US, HK, JP and European equities with simulated live prices, interactive candlestick charts, and sector rotation heatmaps.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💼</div>
+            <h3>Real Portfolio Tracking</h3>
+            <p>Build a real portfolio with weighted cost basis, smart averaging when adding to existing positions, sector allocation pies, and goal tracking.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>Powerful Screener</h3>
+            <p>Filter the full universe by market cap, valuation, dividend, beta, and sector, with sort by any field you need.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📰</div>
+            <h3>Curated Market Brief</h3>
+            <p>A community insight feed lets you publish your own market takes, like and bookmark ideas, and follow tickers through tag-based categorization.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📸</div>
+            <h3>Photo Trade Journal</h3>
+            <p>Capture chart snapshots from camera or photo library, attach tickers, tag your setups, and revisit every thesis privately on device.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Privacy by Design</h3>
+            <p>Never requires an account, never transmits your positions to a server, and contains no advertising trackers. Your data stays yours.</p>
+        </div>
+    </div>
+</section>
+
+<section id="calculators" class="highlights">
+    <div class="highlights-inner">
+        <div class="calc-section">
+            <div class="calc-text">
+                <div class="section-tag">Precision Tools</div>
+                <h3>Eight Calculators for the Formulas You Actually Use</h3>
+                <p>Every formula a serious investor reaches for, built into a single fast toolkit.</p>
+                <ul class="calc-list">
+                    <li>Position sizing by risk percent</li>
+                    <li>Risk/reward with break-even win rate</li>
+                    <li>Multi-year compound interest</li>
+                    <li>Dividend yield & income modeling</li>
+                    <li>Dollar cost averaging schedules</li>
+                    <li>Inflation-adjusted purchasing power</li>
+                    <li>Simple & exponential moving averages</li>
+                    <li>Multi-currency FX converter (10 currencies)</li>
+                </ul>
+            </div>
+            <div class="calc-visual">
+                <div style="color: var(--gold); font-size: 12px; letter-spacing: 2px; margin-bottom: 16px;">POSITION SIZE</div>
+                <div class="calc-row"><span>Account Size</span><span>$100,000.00</span></div>
+                <div class="calc-row"><span>Risk per Trade</span><span>2.0%</span></div>
+                <div class="calc-row"><span>Entry Price</span><span>$154.20</span></div>
+                <div class="calc-row"><span>Stop Loss</span><span>$148.10</span></div>
+                <div class="calc-row"><span>Risk per Share</span><span>$6.10</span></div>
+                <div style="height: 1px; background: var(--border); margin: 12px 0;"></div>
+                <div class="calc-row"><span>Recommended Size</span><span>327 shares</span></div>
+                <div class="calc-row"><span>Position Value</span><span>$50,483.40</span></div>
+                <div class="calc-row"><span>Max Loss</span><span>$2,000.00</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="journal">
+    <div class="section-header">
+        <div class="section-tag">On Device</div>
+        <h2>A journal as private as your edge</h2>
+        <p>Every chart snapshot, ticker tag, and setup note lives only on your iPhone.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📷</div>
+            <h3>Capture Anywhere</h3>
+            <p>Snap a chart from the camera or pull from your photo library. Attach tickers and tag setups in seconds.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏷️</div>
+            <h3>Tag Your Setups</h3>
+            <p>Organize trades by breakout, reversal, earnings play — whatever taxonomy fits your style.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📖</div>
+            <h3>Revisit Every Thesis</h3>
+            <p>Walk back through your reasoning, study what worked, and refine what didn't. Privately, on device.</p>
+        </div>
+    </div>
+</section>
+
+<section class="hero" style="min-height: 60vh; padding: 80px 24px;">
+    <div class="hero-content">
+        <div class="section-tag">Get in Touch</div>
+        <h2 style="font-size: clamp(28px, 4vw, 42px);">Questions, feedback, or feature requests?</h2>
+        <p>We read every message. Reach our team anytime.</p>
+        <div class="cta-group">
+            <a href="mailto:selmabarankolay@gmail.com" class="btn btn-primary">Email Support</a>
+            <a href="support.html" class="btn btn-secondary">Visit Support Center</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <div class="logo">BLELITE</div>
+            <p>A premium, privacy-first investment companion for independent global stock investors.</p>
+        </div>
+        <div>
+            <h4>Product</h4>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#calculators">Calculators</a></li>
+                <li><a href="#journal">Journal</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Support</h4>
+            <ul>
+                <li><a href="support.html">Help Center</a></li>
+                <li><a href="mailto:selmabarankolay@gmail.com">Contact</a></li>
+                <li><a href="privacy.html">Privacy</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Use</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 BLELITE. All rights reserved. · <a href="mailto:selmabarankolay@gmail.com" style="color: var(--gold); text-decoration: none;">selmabarankolay@gmail.com</a>
+    </div>
+</footer>
+
+</body>
+</html>

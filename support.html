@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BLELITE Support Center — Get help with the app, contact our team, and find answers to common questions.">
+<title>Support — BLELITE</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #141414;
+        --bg-card: #1a1a1a;
+        --gold: #d4af37;
+        --gold-light: #f0d678;
+        --gold-dark: #b8941f;
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0a0;
+        --border: #2a2a2a;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.7;
+    }
+    nav {
+        position: sticky;
+        top: 0;
+        background: rgba(10, 10, 10, 0.9);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        z-index: 100;
+        padding: 16px 0;
+    }
+    .nav-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-decoration: none;
+    }
+    .back-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .hero {
+        text-align: center;
+        padding: 80px 24px 40px;
+        background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08), transparent 60%);
+    }
+    .hero h1 {
+        font-size: clamp(36px, 6vw, 52px);
+        font-weight: 800;
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
+    }
+    .hero h1 .gold {
+        background: linear-gradient(135deg, var(--gold-light), var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .hero p {
+        color: var(--text-secondary);
+        font-size: 17px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 24px 80px;
+    }
+    .contact-card {
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
+        border: 1px solid var(--gold-dark);
+        border-radius: 16px;
+        padding: 32px;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .contact-card h2 {
+        font-size: 24px;
+        margin-bottom: 12px;
+        font-weight: 700;
+    }
+    .contact-card p {
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+    }
+    .email-btn {
+        display: inline-block;
+        padding: 14px 28px;
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: #0a0a0a;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 15px;
+        transition: all 0.25s;
+        box-shadow: 0 4px 24px rgba(212, 175, 55, 0.3);
+    }
+    .email-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4);
+    }
+    h2.section-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        letter-spacing: -0.3px;
+    }
+    .faq {
+        margin-top: 60px;
+    }
+    .faq-item {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-color: var(--gold-dark); }
+    .faq-item summary {
+        padding: 20px 24px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 15px;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+        content: '+';
+        color: var(--gold);
+        font-size: 22px;
+        font-weight: 300;
+        transition: transform 0.2s;
+    }
+    .faq-item[open] summary::after { content: '−'; }
+    .faq-item .answer {
+        padding: 0 24px 20px;
+        color: var(--text-secondary);
+        font-size: 14px;
+    }
+    .faq-item .answer p { margin-bottom: 8px; }
+    .quick-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 24px;
+    }
+    .quick-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        transition: all 0.25s;
+    }
+    .quick-card:hover {
+        border-color: var(--gold-dark);
+        transform: translateY(-2px);
+    }
+    .quick-card .icon {
+        font-size: 24px;
+        margin-bottom: 12px;
+    }
+    .quick-card h4 {
+        font-size: 15px;
+        margin-bottom: 6px;
+        font-weight: 700;
+    }
+    .quick-card p {
+        color: var(--text-secondary);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    footer {
+        border-top: 1px solid var(--border);
+        padding: 32px 24px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+    }
+    footer a {
+        color: var(--gold);
+        text-decoration: none;
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-container">
+        <a href="index.html" class="logo">BLELITE</a>
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>How can we <span class="gold">help?</span></h1>
+    <p>We're here to make sure you get the most out of BLELITE.</p>
+</section>
+
+<div class="container">
+
+    <div class="contact-card">
+        <h2>Contact Our Team</h2>
+        <p>We read every message. Reach out for support, feedback, or feature requests.</p>
+        <a href="mailto:selmabarankolay@gmail.com" class="email-btn">📧 selmabarankolay@gmail.com</a>
+    </div>
+
+    <h2 class="section-title">Quick Help</h2>
+    <div class="quick-grid">
+        <div class="quick-card">
+            <div class="icon">🚀</div>
+            <h4>Getting Started</h4>
+            <p>New to BLELITE? Walk through onboarding and start tracking your first position in minutes.</p>
+        </div>
+        <div class="quick-card">
+            <div class="icon">💼</div>
+            <h4>Portfolio Help</h4>
+            <p>Learn how to add positions, use smart averaging, and read your performance trend.</p>
+        </div>
+        <div class="quick-card">
+            <div class="icon">📸</div>
+            <h4>Photo Journal</h4>
+            <p>Capture charts, attach tickers, and tag your setups — all stored privately on device.</p>
+        </div>
+        <div class="quick-card">
+            <div class="icon">🧮</div>
+            <h4>Calculators</h4>
+            <p>Master the eight precision calculators for position sizing, DCA, dividends, and more.</p>
+        </div>
+        <div class="quick-card">
+            <div class="icon">🔍</div>
+            <h4>Screener Tips</h4>
+            <p>Filter by market cap, valuation, dividend, beta, and sector across US, HK, JP and EU.</p>
+        </div>
+        <div class="quick-card">
+            <div class="icon">🔒</div>
+            <h4>Privacy Questions</h4>
+            <p>Understand what BLELITE stores, what it never sends, and how to wipe your data.</p>
+        </div>
+    </div>
+
+    <div class="faq">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+
+        <details class="faq-item">
+            <summary>Does BLELITE require an account?</summary>
+            <div class="answer">
+                <p>No. BLELITE never requires an account, registration, or login. You install it and start using it. Your data stays on your device.</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>Is my portfolio data sent to a server?</summary>
+            <div class="answer">
+                <p>No. All your positions, journal entries, photos, and preferences are stored locally on your iPhone. Nothing is transmitted to any server.</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>Does BLELITE include ads or trackers?</summary>
+            <div class="answer">
+                <p>No. The app contains no advertising trackers, no third-party analytics SDKs, and no ad networks. It's a focused, private experience.</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>Which markets does BLELITE cover?</summary>
+            <div class="answer">
+                <p>US, Hong Kong, Japan, and European equities, with a multi-currency FX converter covering 10 major currencies.</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>How do I back up or move my data?</summary>
+            <div class="answer">
+                <p>BLELITE data is included in your standard iOS device backup when iCloud or iTunes backup is enabled. To fully remove data, simply uninstall the app.</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>What iOS version is required?</summary>
+            <div class="answer">
+                <p>BLELITE is tuned for iOS 16 and later on iPhone. It uses the latest design patterns and system features for a polished experience.</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>How do I report a bug or request a feature?</summary>
+            <div class="answer">
+                <p>Email us at <strong style="color: var(--gold);">selmabarankolay@gmail.com</strong> with a description and screenshots if possible. We review every report.</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>Can I delete all my data?</summary>
+            <div class="answer">
+                <p>Yes. Uninstalling BLELITE permanently removes all locally stored data from your device.</p>
+            </div>
+        </details>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 BLELITE · <a href="index.html">Home</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a>
+</footer>
+
+</body>
+</html>
